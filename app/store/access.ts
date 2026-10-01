@@ -30,7 +30,7 @@ let fetchState = 0; // 0 not fetch, 1 fetching, 2 done
 
 const isApp = getClientConfig()?.buildMode === "export";
 
-const DEFAULT_OPENAI_URL = isApp ? OPENAI_BASE_URL : ApiPath.OpenAI;
+const DEFAULT_OPENAI_URL = OPENAI_BASE_URL; // always the local presidio-fr gateway, app or web
 
 const DEFAULT_GOOGLE_URL = isApp ? GEMINI_BASE_URL : ApiPath.Google;
 
@@ -64,13 +64,13 @@ const DEFAULT_AI302_URL = isApp ? AI302_BASE_URL : ApiPath["302.AI"];
 
 const DEFAULT_ACCESS_STATE = {
   accessCode: "",
-  useCustomConfig: false,
+  useCustomConfig: true, // presidio-fr: talk to the local gateway, never to a provider directly
 
   provider: ServiceProvider.OpenAI,
 
   // openai
   openaiUrl: DEFAULT_OPENAI_URL,
-  openaiApiKey: "",
+  openaiApiKey: "presidio-fr", // placeholder: the gateway holds the real provider keys
 
   // azure
   azureUrl: "",

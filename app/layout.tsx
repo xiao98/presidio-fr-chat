@@ -9,10 +9,11 @@ import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
 import { getServerSideConfig } from "./config/server";
 
 export const metadata: Metadata = {
-  title: "NextChat",
-  description: "Your personal ChatGPT Chat Bot.",
+  title: "presidio-fr",
+  description:
+    "Assistant IA pour cabinets : les données personnelles sont masquées localement avant l'envoi au modèle.",
   appleWebApp: {
-    title: "NextChat",
+    title: "presidio-fr",
     statusBarStyle: "default",
   },
 };
