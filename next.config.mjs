@@ -1,4 +1,5 @@
 import webpack from "webpack";
+import path from "node:path";
 
 const mode = process.env.BUILD_MODE ?? "standalone";
 console.log("[Next] build mode", mode);
@@ -20,8 +21,20 @@ const nextConfig = {
       );
     }
 
+    if (mode === "export") {
+      // static export refuses "use server" modules; the desktop app has no server, so MCP is stubbed
+      config.resolve.alias = {
+        ...(config.resolve.alias || {}),
+        [path.resolve("app/mcp/actions.ts")]: path.resolve("app/mcp/actions.export.ts"),
+        [path.resolve("app/mcp/actions")]: path.resolve("app/mcp/actions.export.ts"),
+      };
+    }
+
     config.resolve.fallback = {
       child_process: false,
+      // optional native deps of `ws` (pulled in by rt-client); absent on purpose in the browser/export build
+      bufferutil: false,
+      "utf-8-validate": false,
     };
 
     return config;
